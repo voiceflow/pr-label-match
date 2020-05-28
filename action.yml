@@ -4,13 +4,13 @@ author: 'Frank Gu <frank@voiceflow.com>'
 inputs:
   regex:              
     description: 'Regex expression for PR labels'
-    default: '/.*/' # Match everthing
+    default: '.*' # Match everthing
     required: true
 outputs: 
-  matched: 
-    description: Does one and only one label match the given regex?
+  multiple: 
+    description: Are there multiple labels matching the regex? 
   label: 
-    description: The unique label matching the regex 
+    description: The first label matching the regex (order is not guaranteed!); empty if no matches
 runs:
   using: 'node12'
   main: 'dist/index.js'

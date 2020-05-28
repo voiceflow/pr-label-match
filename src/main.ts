@@ -1,16 +1,20 @@
+/* eslint-disable @typescript-eslint/camelcase */
 import * as core from '@actions/core'
-import {wait} from './wait'
+import * as github from '@actions/github'
+import {checkList, IResult} from './matcher'
 
 async function run(): Promise<void> {
   try {
-    const ms: string = core.getInput('milliseconds')
-    core.debug(`Waiting ${ms} milliseconds ...`)
+    // Input
+    const re = new RegExp(core.getInput('regex'))
 
-    core.debug(new Date().toTimeString())
-    await wait(parseInt(ms, 10))
-    core.debug(new Date().toTimeString())
+    // Regex check
+    const PRLabels = github?.context?.payload?.pull_request?.labels
+    const result: IResult = checkList(PRLabels, re)
 
-    core.setOutput('time', new Date().toTimeString())
+    // Outputs
+    core.setOutput('multiple', result.multiple)
+    core.setOutput('label', result.label)
   } catch (error) {
     core.setFailed(error.message)
   }
