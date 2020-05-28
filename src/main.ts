@@ -10,11 +10,19 @@ async function run(): Promise<void> {
 
     // Regex check
     const PRLabels = github?.context?.payload?.pull_request?.labels
-    const result: IResult = checkList(PRLabels, re)
+    if (typeof PRLabels !== 'undefined') {
+      core.info('Running regex match')
+      const result: IResult = checkList(PRLabels, re)
+      if (result.multiple) {
+        core.warning('Multiple matches found for regex')
+      }
 
-    // Outputs
-    core.setOutput('multiple', result.multiple)
-    core.setOutput('label', result.label)
+      // Outputs
+      core.setOutput('multiple', result.multiple)
+      core.setOutput('label', result.label)
+    } else {
+      core.info('Skipping match because I am not running in a PR!')
+    }
   } catch (error) {
     core.setFailed(error.message)
   }
