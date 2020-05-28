@@ -1,0 +1,17 @@
+name: "integration-test"
+on: 
+  pull_request:
+    types: [opened, labeled, unlabeled]
+
+jobs:
+  test: # make sure the action works on a clean machine without building
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: ./
+      id: checkLabels
+      with: 
+        regex: '.*'
+    - name: Match results
+      run: |
+        echo -e "label: ${{ steps.checkLabels.outputs.label }}\nmultiple: ${{ steps.checkLabels.outputs.multiple }}" 
