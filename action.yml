@@ -1,10 +1,16 @@
-name: 'Your name here'
-description: 'Provide a description here'
-author: 'Your name or organization here'
+name: 'PR Label Regex Match'
+description: 'Get a list of PR labels that matches a given regex'
+author: 'Frank Gu <frank@voiceflow.com>'
 inputs:
-  myInput:              # change this
-    description: 'input description here'
-    default: 'default value if applicable'
+  regex:              
+    description: 'Regex expression for PR labels'
+    default: '/.*/' # Match everthing
+    required: true
+outputs: 
+  matched: 
+    description: Does one and only one label match the given regex?
+  label: 
+    description: The unique label matching the regex 
 runs:
   using: 'node12'
   main: 'dist/index.js'

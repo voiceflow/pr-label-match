@@ -1,8 +1,8 @@
 {
-  "name": "typescript-action",
+  "name": "@voiceflow/pr-label-match",
   "version": "0.0.0",
   "private": true,
-  "description": "TypeScript template action",
+  "description": "Match PR labels to a given regex",
   "main": "lib/main.js",
   "scripts": {
     "build": "tsc",
@@ -15,14 +15,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/actions/typescript-action.git"
+    "url": "git+https://github.com/voiceflow/pr-label-match.git"
   },
   "keywords": [
     "actions",
     "node",
-    "setup"
+    "pr", 
+    "labels"
   ],
-  "author": "YourNameOrOrganization",
+  "author": "frank@voiceflow.com",
   "license": "MIT",
   "dependencies": {
     "@actions/core": "^1.2.0"
