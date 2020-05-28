@@ -2076,11 +2076,19 @@ function run() {
             const re = new RegExp(core.getInput('regex'));
             // Regex check
             const PRLabels = (_c = (_b = (_a = github === null || github === void 0 ? void 0 : github.context) === null || _a === void 0 ? void 0 : _a.payload) === null || _b === void 0 ? void 0 : _b.pull_request) === null || _c === void 0 ? void 0 : _c.labels;
-            console.log(PRLabels);
-            const result = matcher_1.checkList(PRLabels, re);
-            // Outputs
-            core.setOutput('multiple', result.multiple);
-            core.setOutput('label', result.label);
+            if (typeof PRLabels !== 'undefined') {
+                core.info('Running regex match');
+                const result = matcher_1.checkList(PRLabels, re);
+                if (result.multiple) {
+                    core.warning('Multiple matches found for regex');
+                }
+                // Outputs
+                core.setOutput('multiple', result.multiple);
+                core.setOutput('label', result.label);
+            }
+            else {
+                core.info('Skipping match because I am not running in a PR!');
+            }
         }
         catch (error) {
             core.setFailed(error.message);
